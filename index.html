@@ -5,80 +5,44 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ixomar Cautela</title>
   <style>
-    /* ============================================
-       COLORES PRINCIPALES (fáciles de cambiar)
-       ============================================ */
     :root {
-      --night-deep: #0a1428;      /* Azul muy oscuro */
-      --night-mid: #1a2a4a;       /* Azul intermedio */
-      --star-yellow: #f4d35e;     /* Amarillo de las estrellas */
-      --star-gold: #ffec8b;       /* Amarillo más claro */
-      --moon: #f7e9a0;            /* Color de la luna */
-      --text-main: #f0e6d3;       /* Texto principal */
-      --text-soft: #b8a99a;       /* Texto secundario */
+      --night-deep: #0c1a3a;
+      --star-yellow: #f7e27a;
+      --text-main: #f0e6d3;
+      --text-soft: #b8a99a;
     }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-      background-color: var(--night-deep);
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: var(--night-deep);
       color: var(--text-main);
       overflow-x: hidden;
       min-height: 100vh;
     }
 
-    /* ---------- LIENZO DE ESTRELLAS ---------- */
-    #star-canvas {
+    #sky {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
       z-index: -1;
     }
 
-    /* ---------- LUNA ---------- */
-    .moon {
-      position: fixed;
-      top: 12%;
-      right: 12%;
-      width: 90px;
-      height: 90px;
-      background: radial-gradient(circle at 35% 35%, var(--moon), #e8c86a 60%, #c9a84c);
-      border-radius: 50%;
-      box-shadow: 
-        0 0 40px rgba(244, 211, 94, 0.4),
-        0 0 80px rgba(244, 211, 94, 0.2);
-      z-index: 0;
-      animation: moonGlow 6s ease-in-out infinite alternate;
-    }
-
-    @keyframes moonGlow {
-      from { box-shadow: 0 0 40px rgba(244, 211, 94, 0.35), 0 0 80px rgba(244, 211, 94, 0.15); }
-      to   { box-shadow: 0 0 55px rgba(244, 211, 94, 0.5), 0 0 100px rgba(244, 211, 94, 0.25); }
-    }
-
-    /* ---------- NAVEGACIÓN ---------- */
+    /* Navegación */
     .nav {
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
+      top: 0; left: 0; right: 0;
       z-index: 100;
       padding: 1.3rem 2.5rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: linear-gradient(to bottom, rgba(10, 20, 40, 0.75), transparent);
+      background: linear-gradient(to bottom, rgba(12,26,58,0.75), transparent);
     }
 
     .logo {
-      font-family: Georgia, 'Times New Roman', serif;
+      font-family: Georgia, serif;
       font-size: 1.35rem;
       color: var(--star-yellow);
       text-decoration: none;
@@ -97,30 +61,22 @@
       font-size: 0.88rem;
       letter-spacing: 0.07em;
       text-transform: uppercase;
-      transition: color 0.3s ease;
       position: relative;
+      transition: color 0.3s;
     }
 
     .nav-links a::after {
       content: '';
       position: absolute;
-      bottom: -4px;
-      left: 0;
-      width: 0;
-      height: 1px;
+      bottom: -4px; left: 0;
+      width: 0; height: 1px;
       background: var(--star-yellow);
-      transition: width 0.3s ease;
+      transition: width 0.3s;
     }
 
-    .nav-links a:hover {
-      color: var(--star-yellow);
-    }
+    .nav-links a:hover { color: var(--star-yellow); }
+    .nav-links a:hover::after { width: 100%; }
 
-    .nav-links a:hover::after {
-      width: 100%;
-    }
-
-    /* Menú móvil */
     .menu-toggle {
       display: none;
       background: none;
@@ -130,7 +86,7 @@
       cursor: pointer;
     }
 
-    /* ---------- HERO (contenido principal) ---------- */
+    /* Hero */
     .hero {
       min-height: 100vh;
       display: flex;
@@ -154,7 +110,7 @@
     }
 
     .hero h1 {
-      font-family: Georgia, 'Times New Roman', serif;
+      font-family: Georgia, serif;
       font-size: clamp(2.8rem, 7vw, 4.6rem);
       font-weight: 400;
       line-height: 1.15;
@@ -199,7 +155,7 @@
     .hero-cta:hover {
       background: var(--star-yellow);
       color: var(--night-deep);
-      box-shadow: 0 0 28px rgba(244, 211, 94, 0.35);
+      box-shadow: 0 0 35px rgba(247, 226, 122, 0.45);
     }
 
     @keyframes fadeUp {
@@ -207,7 +163,6 @@
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    /* Indicador de scroll */
     .scroll-hint {
       position: absolute;
       bottom: 2.8rem;
@@ -220,57 +175,31 @@
       animation: fadeUp 1.2s 1.2s forwards;
     }
 
-    /* ---------- RESPONSIVE (móvil) ---------- */
     @media (max-width: 768px) {
-      .nav {
-        padding: 1.1rem 1.5rem;
-      }
-
+      .nav { padding: 1.1rem 1.5rem; }
       .nav-links {
         display: none;
         position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        background: rgba(10, 20, 40, 0.97);
+        top: 100%; left: 0; right: 0;
+        background: rgba(12,26,58,0.97);
         flex-direction: column;
         padding: 1.5rem;
         gap: 1.3rem;
       }
-
-      .nav-links.open {
-        display: flex;
-      }
-
-      .menu-toggle {
-        display: block;
-      }
-
-      .moon {
-        width: 60px;
-        height: 60px;
-        top: 10%;
-        right: 8%;
-      }
+      .nav-links.open { display: flex; }
+      .menu-toggle { display: block; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Lienzo donde se dibujan las estrellas -->
-  <canvas id="star-canvas"></canvas>
+  <canvas id="sky"></canvas>
 
-  <!-- Luna -->
-  <div class="moon"></div>
-
-  <!-- Menú de navegación -->
   <nav class="nav">
-    <a href="index.html" class="logo">✦ Ixomar Cautela</a>
-    
-    <button class="menu-toggle" aria-label="Abrir menú">☰</button>
-    
+    <a href="#" class="logo">✦ Ixomar Cautela</a>
+    <button class="menu-toggle">☰</button>
     <ul class="nav-links">
-      <li><a href="index.html">Inicio</a></li>
+      <li><a href="#">Inicio</a></li>
       <li><a href="#">Gustos</a></li>
       <li><a href="#">Experiencias</a></li>
       <li><a href="#">Trabajos</a></li>
@@ -278,9 +207,8 @@
     </ul>
   </nav>
 
-  <!-- Contenido principal de la portada -->
   <section class="hero">
-    <div class="hero-content">
+    <div>
       <p class="hero-tag">Bienvenida a mi universo</p>
       <h1>Ixomar Cautela<br><span>entre estrellas y sueños</span></h1>
       <p class="hero-subtitle">
@@ -293,83 +221,122 @@
   </section>
 
   <script>
-    // ============================================
-    // ANIMACIÓN DE ESTRELLAS
-    // ============================================
-    const canvas = document.getElementById('star-canvas');
+    const canvas = document.getElementById('sky');
     const ctx = canvas.getContext('2d');
-    let stars = [];
-    let width, height;
+    let w, h, time = 0;
+
+    // Estrellas grandes estilo Van Gogh (con anillos)
+    const bigStars = [
+      { x: 0.82, y: 0.18, size: 1.0 },   // la grande de la derecha (luna/estrella)
+      { x: 0.22, y: 0.15, size: 0.55 },
+      { x: 0.45, y: 0.28, size: 0.4 },
+      { x: 0.68, y: 0.22, size: 0.35 },
+      { x: 0.12, y: 0.38, size: 0.3 },
+      { x: 0.35, y: 0.12, size: 0.28 },
+      { x: 0.55, y: 0.15, size: 0.25 },
+      { x: 0.78, y: 0.42, size: 0.22 }
+    ];
 
     function resize() {
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
     }
 
-    function createStars() {
-      stars = [];
-      // Cantidad de estrellas según el tamaño de la pantalla
-      const count = Math.floor((width * height) / 3200);
-      for (let i = 0; i < count; i++) {
-        stars.push({
-          x: Math.random() * width,
-          y: Math.random() * height,
-          radius: Math.random() * 1.6 + 0.3,
-          opacity: Math.random(),
-          twinkleSpeed: Math.random() * 0.02 + 0.005,
-          twinkleDirection: Math.random() > 0.5 ? 1 : -1
-        });
+    // Dibuja una estrella con anillos (como en el cuadro)
+    function drawVanGoghStar(x, y, radius, intensity) {
+      // Anillos exteriores
+      for (let i = 5; i >= 1; i--) {
+        const r = radius * (1 + i * 0.55);
+        const alpha = (0.07 / i) * intensity;
+        ctx.beginPath();
+        ctx.arc(x, y, r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255, 230, 140, ${alpha})`;
+        ctx.fill();
+      }
+      // Núcleo brillante
+      const gradient = ctx.createRadialGradient(x, y, 0, x, y, radius);
+      gradient.addColorStop(0, `rgba(255, 250, 220, ${0.95 * intensity})`);
+      gradient.addColorStop(0.4, `rgba(247, 226, 122, ${0.8 * intensity})`);
+      gradient.addColorStop(1, `rgba(247, 226, 122, 0)`);
+      ctx.beginPath();
+      ctx.arc(x, y, radius, 0, Math.PI * 2);
+      ctx.fillStyle = gradient;
+      ctx.fill();
+    }
+
+    // Dibuja un remolino grueso tipo pincelada
+    function drawSwirl(cx, cy, maxRadius, rotation, clockwise = true) {
+      const dir = clockwise ? 1 : -1;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+
+      for (let layer = 0; layer < 6; layer++) {
+        ctx.beginPath();
+        const startAngle = rotation + layer * 0.4;
+        for (let a = 0; a < Math.PI * 2.8; a += 0.08) {
+          const r = (a / (Math.PI * 2.8)) * maxRadius * (0.7 + layer * 0.08);
+          const x = cx + Math.cos(startAngle + a * dir) * r;
+          const y = cy + Math.sin(startAngle + a * dir) * r * 0.72;
+          if (a === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+        ctx.strokeStyle = layer % 2 === 0 
+          ? `rgba(70, 120, 200, ${0.11 - layer * 0.012})` 
+          : `rgba(100, 160, 230, ${0.09 - layer * 0.01})`;
+        ctx.lineWidth = 14 - layer * 1.5;
+        ctx.stroke();
       }
     }
 
     function draw() {
-      // Fondo
-      ctx.fillStyle = '#0a1428';
-      ctx.fillRect(0, 0, width, height);
+      // Fondo base
+      ctx.fillStyle = '#0c1a3a';
+      ctx.fillRect(0, 0, w, h);
 
-      // Dibujar cada estrella
-      stars.forEach(star => {
-        // Efecto de parpadeo
-        star.opacity += star.twinkleSpeed * star.twinkleDirection;
-        if (star.opacity >= 1 || star.opacity <= 0.2) {
-          star.twinkleDirection *= -1;
-        }
+      time += 0.0035; // velocidad muy lenta y solemne
 
-        ctx.beginPath();
-        ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255, 236, 139, ${star.opacity})`;
-        ctx.fill();
+      // === REMOLINOS GRANDES (estilo pincelada) ===
+      // Remolino central grande
+      drawSwirl(w * 0.55, h * 0.38, Math.min(w, h) * 0.42, time * 0.6, true);
+      // Remolino izquierdo
+      drawSwirl(w * 0.28, h * 0.32, Math.min(w, h) * 0.28, -time * 0.45, false);
+      // Remolino derecho más pequeño
+      drawSwirl(w * 0.78, h * 0.45, Math.min(w, h) * 0.22, time * 0.7, true);
+      // Remolino inferior suave
+      drawSwirl(w * 0.4, h * 0.62, Math.min(w, h) * 0.25, -time * 0.35, false);
 
-        // Brillo extra en estrellas más grandes
-        if (star.radius > 1.2) {
-          ctx.beginPath();
-          ctx.arc(star.x, star.y, star.radius * 2.5, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(244, 211, 94, ${star.opacity * 0.15})`;
-          ctx.fill();
-        }
+      // === ESTRELLAS GRANDES CON ANILLOS ===
+      bigStars.forEach((star, i) => {
+        const pulse = 0.85 + Math.sin(time * 1.5 + i) * 0.15;
+        drawVanGoghStar(
+          star.x * w,
+          star.y * h,
+          star.size * Math.min(w, h) * 0.045,
+          pulse
+        );
       });
+
+      // Estrellas pequeñas que titilan
+      for (let i = 0; i < 60; i++) {
+        const x = (Math.sin(i * 127.1) * 0.5 + 0.5) * w;
+        const y = (Math.cos(i * 91.3) * 0.5 + 0.5) * h;
+        const alpha = 0.3 + Math.sin(time * 2 + i) * 0.3;
+        ctx.beginPath();
+        ctx.arc(x, y, 1.1, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255, 240, 180, ${alpha})`;
+        ctx.fill();
+      }
 
       requestAnimationFrame(draw);
     }
 
-    // Iniciar
     resize();
-    createStars();
     draw();
+    window.addEventListener('resize', resize);
 
-    window.addEventListener('resize', () => {
-      resize();
-      createStars();
-    });
-
-    // ============================================
-    // MENÚ MÓVIL
-    // ============================================
-    const menuToggle = document.querySelector('.menu-toggle');
-    const navLinks = document.querySelector('.nav-links');
-
-    menuToggle.addEventListener('click', () => {
-      navLinks.classList.toggle('open');
+    // Menú móvil
+    document.querySelector('.menu-toggle').addEventListener('click', () => {
+      document.querySelector('.nav-links').classList.toggle('open');
     });
   </script>
 </body>
