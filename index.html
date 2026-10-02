@@ -1,1 +1,218 @@
-Ivan ya no me cae tan mal, pero igual está en cuerda floja
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mi Portafolio Profesional</title>
+
+https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background: linear-gradient(135deg,#fde2ff,#e9d5ff,#fff);
+    min-height:100vh;
+    color:#444;
+}
+
+header{
+    text-align:center;
+    padding:60px 20px;
+}
+
+.foto{
+    width:180px;
+    height:180px;
+    border-radius:50%;
+    object-fit:cover;
+    border:6px solid white;
+    box-shadow:0 10px 30px rgba(0,0,0,0.15);
+    transition:0.4s;
+}
+
+.foto:hover{
+    transform:scale(1.05);
+}
+
+h1{
+    margin-top:20px;
+    font-size:2.5rem;
+    color:#7e57c2;
+}
+
+.cargo{
+    margin-top:10px;
+    font-size:1.2rem;
+    color:#666;
+}
+
+.btn{
+    display:inline-block;
+    margin-top:25px;
+    padding:12px 25px;
+    background:#c084fc;
+    color:white;
+    text-decoration:none;
+    border-radius:30px;
+    transition:.3s;
+    font-weight:600;
+}
+
+.btn:hover{
+    background:#a855f7;
+    transform:translateY(-3px);
+}
+
+.container{
+    max-width:1100px;
+    margin:auto;
+    padding:20px;
+}
+
+.section{
+    background:white;
+    margin:25px 0;
+    padding:30px;
+    border-radius:25px;
+    box-shadow:0 8px 25px rgba(0,0,0,0.08);
+    transition:.3s;
+}
+
+.section:hover{
+    transform:translateY(-5px);
+}
+
+h2{
+    color:#8b5cf6;
+    margin-bottom:20px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:20px;
+}
+
+.card{
+    background:#faf5ff;
+    padding:20px;
+    border-radius:20px;
+    transition:.3s;
+}
+
+.card:hover{
+    background:#f3e8ff;
+    transform:scale(1.03);
+}
+
+.skill{
+    margin-bottom:15px;
+}
+
+.progress{
+    background:#eee;
+    height:10px;
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.progress span{
+    display:block;
+    height:100%;
+    background:linear-gradient(to right,#d946ef,#8b5cf6);
+}
+
+.contacto{
+    text-align:center;
+}
+
+.contacto a{
+    color:#8b5cf6;
+    text-decoration:none;
+    font-weight:600;
+}
+
+footer{
+    text-align:center;
+    padding:25px;
+    color:#666;
+}
+
+@keyframes aparecer{
+    from{
+        opacity:0;
+        transform:translateY(30px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+.section{
+    animation:aparecer .8s ease;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+    https://via.placeholder.com/180
+
+    <h1>Ixomar Cautela</h1>
+
+    <p class="cargo">
+        Contadora | Asistente Administrativa | Profesional Creativa
+    </p>
+
+    <a href="#contacto" /a>
+
+</header>
+
+<div class="container">
+
+    <section class="section">
+        <h2>🌷 Sobre mí</h2>
+        <p>
+            Soy una profesional responsable, organizada y apasionada por el aprendizaje continuo.
+            Me especializo en áreas administrativas y contables, destacándome por mi compromiso,
+            creatividad y capacidad para trabajar en equipo.
+        </p>
+    </section>
+
+    <section class="section">
+        <h2>💼 Experiencia</h2>
+
+        <div class="grid">
+
+            <div class="card">
+                <h3>Asistente Administrativa</h3>
+                <p>2023 - Actualidad</p>
+                <br>
+                <p>
+                    Gestión documental, atención al cliente y organización de procesos internos.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>Auxiliar Contable</h3>
+                <p>2021 - 2023</p>
+                <br>
+                <p>
+                    Registro de operaciones, conciliaciones bancarias y elaboración de reportes.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="section">
+  
