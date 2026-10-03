@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gustos | Ixomar Cautela</title>
+  <style>
+    :root {
+      --cream: #f7f1e9;
+      --warm-white: #fffdf9;
+      --text-dark: #2c2522;
+      --text-soft: #6b5e57;
+      --accent: #c9a227;
+      --card-bg: #ffffff;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background-color: var(--cream);
+      color: var(--text-dark);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* Fondo decorativo sutil y único de esta página */
+    .bg-shapes {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .shape {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(60px);
+      opacity: 0.35;
+    }
+
+    .shape-1 {
+      width: 400px;
+      height: 400px;
+      background: #e8d5b5;
+      top: -100px;
+      left: -100px;
+    }
+
+    .shape-2 {
+      width: 350px;
+      height: 350px;
+      background: #d4c4a8;
+      bottom: -80px;
+      right: -80px;
+    }
+
+    .shape-3 {
+      width: 250px;
+      height: 250px;
+      background: #c9b896;
+      top: 40%;
+      left: 60%;
+    }
+
+    /* Navegación */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 1.3rem 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(247, 241, 233, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(44, 37, 34, 0.06);
+    }
+
+    .logo {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 1.35rem;
+      color: var(--accent);
+      text-decoration: none;
+      letter-spacing: 0.06em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-soft);
+      text-decoration: none;
+      font-size: 0.88rem;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      transition: color 0.3s ease;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--accent);
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--text-dark);
+    }
+
+    .nav-links a:hover::after,
+    .nav-links a.active::after {
+      width: 100%;
+    }
+
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--text-dark);
+      font-size: 1.6rem;
+      cursor: pointer;
+    }
+
+    /* Contenido */
+    .page-header {
+      padding: 9rem 2rem 3rem;
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .page-header .label {
+      font-size: 0.8rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+
+    .page-header h1 {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: clamp(2.4rem, 5vw, 3.4rem);
+      font-weight: 400;
+      margin-bottom: 1rem;
+      color: var(--text-dark);
+    }
+
+    .page-header p {
+      color: var(--text-soft);
+      font-size: 1.15rem;
+    }
+
+    /* Grid de gustos */
+    .gustos-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 1rem 2rem 6rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2rem;
+    }
+
+    .gusto-card {
+      background: var(--card-bg);
+      border-radius: 18px;
+      padding: 2.2rem 1.8rem;
+      box-shadow: 0 10px 30px rgba(44, 37, 34, 0.06);
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .gusto-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(44, 37, 34, 0.1);
+    }
+
+    /* Toque único: ligera rotación alternada */
+    .gusto-card:nth-child(even) {
+      transform: rotate(0.8deg);
+    }
+
+    .gusto-card:nth-child(odd) {
+      transform: rotate(-0.8deg);
+    }
+
+    .gusto-card:hover {
+      transform: translateY(-8px) rotate(0deg);
+    }
+
+    .gusto-icon {
+      font-size: 1.8rem;
+      margin-bottom: 1.2rem;
+      display: inline-block;
+    }
+
+    .gusto-card h3 {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 1.4rem;
+      font-weight: 400;
+      margin-bottom: 0.8rem;
+      color: var(--text-dark);
+    }
+
+    .gusto-card p {
+      color: var(--text-soft);
+      font-size: 0.98rem;
+      line-height: 1.6;
+    }
+
+    /* Footer simple */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.85rem;
+      color: var(--text-soft);
+      border-top: 1px solid rgba(44, 37, 34, 0.08);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .nav {
+        padding: 1.1rem 1.5rem;
+      }
+
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: rgba(247, 241, 233, 0.98);
+        flex-direction: column;
+        padding: 1.5rem;
+        gap: 1.3rem;
+      }
+
+      .nav-links.open {
+        display: flex;
+      }
+
+      .menu-toggle {
+        display: block;
+      }
+
+      .page-header {
+        padding: 8rem 1.5rem 2.5rem;
+      }
+
+      .gustos-grid {
+        padding: 1rem 1.5rem 4rem;
+        gap: 1.5rem;
+      }
+
+      .gusto-card:nth-child(even),
+      .gusto-card:nth-child(odd) {
+        transform: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Formas suaves de fondo (única de esta página) -->
+  <div class="bg-shapes">
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+    <div class="shape shape-3"></div>
+  </div>
+
+  <!-- Navegación -->
+  <nav class="nav">
+    <a href="index.html" class="logo">✦ Ixomar Cautela</a>
+    <button class="menu-toggle" aria-label="Abrir menú">☰</button>
+    <ul class="nav-links">
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="gustos.html" class="active">Gustos</a></li>
+      <li><a href="#">Experiencias</a></li>
+      <li><a href="#">Trabajos</a></li>
+      <li><a href="#">Contacto</a></li>
+    </ul>
+  </nav>
+
+  <!-- Encabezado -->
+  <header class="page-header">
+    <p class="label">Lo que me mueve</p>
+    <h1>Mis gustos</h1>
+    <p>Las cosas que disfruto, que me inspiran y que forman parte de quién soy.</p>
+  </header>
+
+  <!-- Grid de gustos -->
+  <section class="gustos-grid">
+
+    <div class="gusto-card">
+      <div class="gusto-icon">🧵</div>
+      <h3>Costura</h3>
+      <p>Me apasiona crear con telas e hilos. He hecho vestidos para mí y para una niña. Es una forma de transformar ideas en algo que se puede tocar y usar.</p>
+    </div>
+
+    <div class="gusto-card">
+      <div class="gusto-icon">📖</div>
+      <h3>Leer novelas</h3>
+      <p>Me encanta perderse en historias. Leer me permite viajar a otros mundos y al mismo tiempo entender mejor las emociones humanas.</p>
+    </div>
+
+    <div class="gusto-card">
+      <div class="gusto-icon">🧩</div>
+      <h3>Sudokus</h3>
+      <p>Me gusta el reto de ordenar el caos. Resolver sudokus me relaja y al mismo tiempo mantiene mi mente activa y enfocada.</p>
+    </div>
+
+    <div class="gusto-card">
+      <div class="gusto-icon">✋</div>
+      <h3>Crear con las manos</h3>
+      <p>Siempre estoy haciendo algo nuevo: láminas, maquetas, piñatas, afiches… Crear con las manos es mi forma natural de expresarme.</p>
+    </div>
+
+    <div class="gusto-card">
+      <div class="gusto-icon">✨</div>
+      <h3>Aprender cosas nuevas</h3>
+      <p>Me emociona empezar proyectos en los que no sé todo. Ahora estoy entrando en el mundo de las páginas web y el diseño digital.</p>
+    </div>
+
+    <div class="gusto-card">
+      <div class="gusto-icon">🌙</div>
+      <h3>Los momentos tranquilos</h3>
+      <p>Valoro los espacios de calma: una buena lectura, crear en silencio o simplemente estar presente con lo que estoy haciendo.</p>
+    </div>
+
+  </section>
+
+  <footer>
+    <p>© 2026 Ixomar Cautela</p>
+  </footer>
+
+  <script>
+    // Menú móvil
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
+
+    menuToggle.addEventListener('click', () => {
+      navLinks.classList.toggle('open');
+    });
+  </script>
+</body>
+</html>
