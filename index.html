@@ -7,22 +7,16 @@
   <style>
     :root {
       --night-deep: #0a1428;
-      --night-mid: #1a2a4a;
       --star-yellow: #f4d35e;
-      --star-gold: #ffec8b;
       --moon: #f7e9a0;
       --text-main: #f0e6d3;
       --text-soft: #b8a99a;
     }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      font-family: 'Segoe UI', system-ui, sans-serif;
       background-color: var(--night-deep);
       color: var(--text-main);
       overflow-x: hidden;
@@ -31,24 +25,18 @@
 
     #star-canvas {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
       z-index: -1;
     }
 
     .moon {
       position: fixed;
-      top: 12%;
-      right: 12%;
-      width: 90px;
-      height: 90px;
+      top: 12%; right: 12%;
+      width: 90px; height: 90px;
       background: radial-gradient(circle at 35% 35%, var(--moon), #e8c86a 60%, #c9a84c);
       border-radius: 50%;
-      box-shadow: 
-        0 0 40px rgba(244, 211, 94, 0.4),
-        0 0 80px rgba(244, 211, 94, 0.2);
+      box-shadow: 0 0 40px rgba(244, 211, 94, 0.4), 0 0 80px rgba(244, 211, 94, 0.2);
       z-index: 0;
       animation: moonGlow 6s ease-in-out infinite alternate;
     }
@@ -61,9 +49,7 @@
     /* Navegación */
     .nav {
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
+      top: 0; left: 0; right: 0;
       z-index: 100;
       padding: 1.3rem 2.5rem;
       display: flex;
@@ -73,7 +59,7 @@
     }
 
     .logo {
-      font-family: Georgia, 'Times New Roman', serif;
+      font-family: Georgia, serif;
       font-size: 1.35rem;
       color: var(--star-yellow);
       text-decoration: none;
@@ -92,28 +78,21 @@
       font-size: 0.88rem;
       letter-spacing: 0.07em;
       text-transform: uppercase;
-      transition: color 0.3s ease;
       position: relative;
+      transition: color 0.3s;
     }
 
     .nav-links a::after {
       content: '';
       position: absolute;
-      bottom: -4px;
-      left: 0;
-      width: 0;
-      height: 1px;
+      bottom: -4px; left: 0;
+      width: 0; height: 1px;
       background: var(--star-yellow);
-      transition: width 0.3s ease;
+      transition: width 0.3s;
     }
 
-    .nav-links a:hover {
-      color: var(--star-yellow);
-    }
-
-    .nav-links a:hover::after {
-      width: 100%;
-    }
+    .nav-links a:hover { color: var(--star-yellow); }
+    .nav-links a:hover::after { width: 100%; }
 
     .menu-toggle {
       display: none;
@@ -124,13 +103,13 @@
       cursor: pointer;
     }
 
-    /* ========== HERO CON FOTOS ========== */
+    /* ========== HERO ========== */
     .hero {
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 6rem 2rem 4rem;
+      padding: 7rem 2rem 5rem;
       position: relative;
       z-index: 1;
       gap: 4rem;
@@ -141,7 +120,6 @@
     .hero-text {
       flex: 1;
       max-width: 520px;
-      text-align: left;
     }
 
     .hero-tag {
@@ -155,7 +133,7 @@
     }
 
     .hero h1 {
-      font-family: Georgia, 'Times New Roman', serif;
+      font-family: Georgia, serif;
       font-size: clamp(2.6rem, 5.5vw, 3.8rem);
       font-weight: 400;
       line-height: 1.15;
@@ -204,7 +182,7 @@
       box-shadow: 0 0 28px rgba(244, 211, 94, 0.35);
     }
 
-    /* Zona de fotos */
+    /* Fotos */
     .hero-photos {
       flex: 1;
       position: relative;
@@ -214,7 +192,6 @@
       animation: fadeUp 1.2s 0.6s forwards;
     }
 
-    /* Foto principal (la más grande) */
     .photo-main {
       position: absolute;
       width: 280px;
@@ -226,19 +203,16 @@
       overflow: hidden;
       background: linear-gradient(145deg, #1a2a4a, #0f1c33);
       border: 1px solid rgba(244, 211, 94, 0.25);
-      box-shadow: 0 20px 50px rgba(0,0,0,0.4),
-                  0 0 30px rgba(244, 211, 94, 0.1);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.4), 0 0 30px rgba(244, 211, 94, 0.1);
       display: flex;
       align-items: center;
       justify-content: center;
       color: var(--text-soft);
       font-size: 0.9rem;
-      letter-spacing: 0.05em;
       text-align: center;
       z-index: 2;
     }
 
-    /* Fotos secundarias */
     .photo-secondary {
       position: absolute;
       border-radius: 14px;
@@ -251,37 +225,14 @@
       justify-content: center;
       color: var(--text-soft);
       font-size: 0.8rem;
-      letter-spacing: 0.04em;
       text-align: center;
       z-index: 1;
     }
 
-    .photo-2 {
-      width: 150px;
-      height: 190px;
-      top: 0;
-      left: 0;
-      transform: rotate(-6deg);
-    }
+    .photo-2 { width: 150px; height: 190px; top: 0; left: 0; transform: rotate(-6deg); }
+    .photo-3 { width: 140px; height: 170px; bottom: 20px; right: 10px; transform: rotate(5deg); }
+    .photo-4 { width: 110px; height: 130px; bottom: 0; left: 30px; transform: rotate(-3deg); z-index: 3; }
 
-    .photo-3 {
-      width: 140px;
-      height: 170px;
-      bottom: 20px;
-      right: 10px;
-      transform: rotate(5deg);
-    }
-
-    .photo-4 {
-      width: 110px;
-      height: 130px;
-      bottom: 0;
-      left: 30px;
-      transform: rotate(-3deg);
-      z-index: 3;
-    }
-
-    /* Cuando pongas las fotos reales, solo cambia el fondo por una imagen */
     .photo-main img,
     .photo-secondary img {
       width: 100%;
@@ -307,62 +258,59 @@
       animation: fadeUp 1.2s 1.2s forwards;
     }
 
-    /* Responsive */
+    /* ========== MÓVIL - AQUÍ ESTÁ EL ARREGLO ========== */
     @media (max-width: 900px) {
       .hero {
         flex-direction: column;
+        padding: 7rem 1.5rem 4rem;
+        gap: 3.5rem;
         text-align: center;
-        padding-top: 7rem;
-        gap: 3rem;
       }
 
       .hero-text {
-        text-align: center;
         max-width: 100%;
+        order: 1; /* el texto va primero */
       }
 
       .hero-photos {
-        height: 420px;
+        order: 2; /* las fotos van después del botón */
+        height: 380px;
         width: 100%;
-        max-width: 380px;
+        max-width: 340px;
+        margin: 0 auto;
       }
 
       .photo-main {
-        width: 240px;
-        height: 310px;
+        width: 220px;
+        height: 290px;
       }
+
+      .photo-2 { width: 120px; height: 155px; }
+      .photo-3 { width: 115px; height: 140px; }
+      .photo-4 { width: 95px; height: 115px; }
     }
 
     @media (max-width: 768px) {
-      .nav {
-        padding: 1.1rem 1.5rem;
-      }
+      .nav { padding: 1.1rem 1.5rem; }
 
       .nav-links {
         display: none;
         position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
+        top: 100%; left: 0; right: 0;
         background: rgba(10, 20, 40, 0.97);
         flex-direction: column;
         padding: 1.5rem;
         gap: 1.3rem;
       }
 
-      .nav-links.open {
-        display: flex;
-      }
-
-      .menu-toggle {
-        display: block;
-      }
+      .nav-links.open { display: flex; }
+      .menu-toggle { display: block; }
 
       .moon {
-        width: 60px;
-        height: 60px;
-        top: 10%;
-        right: 8%;
+        width: 55px;
+        height: 55px;
+        top: 9%;
+        right: 7%;
       }
     }
   </style>
@@ -385,7 +333,7 @@
   </nav>
 
   <section class="hero">
-    <!-- Texto -->
+    <!-- Texto + botón (van primero en móvil) -->
     <div class="hero-text">
       <p class="hero-tag">Te doy la bienvenida</p>
       <h1>Ixomar Cautela<br><span>De la imaginación a la realidad</span></h1>
@@ -396,39 +344,23 @@
       <a href="#" class="hero-cta">Explorar →</a>
     </div>
 
-    <!-- Zona de fotos (lista para cuando tengas las imágenes) -->
+    <!-- Fotos (van después del botón en móvil) -->
     <div class="hero-photos">
-      <!-- Foto principal (la más grande) -->
       <div class="photo-main">
         Foto principal<br><small style="opacity:0.6">(recomendado vertical)</small>
-        <!-- Cuando tengas la foto, borra el texto de arriba y pon:
-        <img src="tu-foto-principal.jpg" alt="Ixomar Cautela">
-        -->
       </div>
-
-      <!-- Fotos secundarias -->
-      <div class="photo-secondary photo-2">
-        Foto 2
-        <!-- <img src="foto-2.jpg" alt=""> -->
-      </div>
-
-      <div class="photo-secondary photo-3">
-        Foto 3
-        <!-- <img src="foto-3.jpg" alt=""> -->
-      </div>
-
-      <div class="photo-secondary photo-4">
-        Foto 4
-        <!-- <img src="foto-4.jpg" alt=""> -->
-      </div>
+      <div class="photo-secondary photo-2">Foto 2</div>
+      <div class="photo-secondary photo-3">Foto 3</div>
+      <div class="photo-secondary photo-4">Foto 4</div>
     </div>
   </section>
+
+  <div class="scroll-hint">Desliza para descubrir</div>
 
   <script>
     const canvas = document.getElementById('star-canvas');
     const ctx = canvas.getContext('2d');
-    let stars = [];
-    let width, height;
+    let stars = [], width, height;
 
     function resize() {
       width = canvas.width = window.innerWidth;
@@ -453,18 +385,13 @@
     function draw() {
       ctx.fillStyle = '#0a1428';
       ctx.fillRect(0, 0, width, height);
-
       stars.forEach(star => {
         star.opacity += star.twinkleSpeed * star.twinkleDirection;
-        if (star.opacity >= 1 || star.opacity <= 0.2) {
-          star.twinkleDirection *= -1;
-        }
-
+        if (star.opacity >= 1 || star.opacity <= 0.2) star.twinkleDirection *= -1;
         ctx.beginPath();
         ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
         ctx.fillStyle = `rgba(255, 236, 139, ${star.opacity})`;
         ctx.fill();
-
         if (star.radius > 1.2) {
           ctx.beginPath();
           ctx.arc(star.x, star.y, star.radius * 2.5, 0, Math.PI * 2);
@@ -472,23 +399,16 @@
           ctx.fill();
         }
       });
-
       requestAnimationFrame(draw);
     }
 
     resize();
     createStars();
     draw();
+    window.addEventListener('resize', () => { resize(); createStars(); });
 
-    window.addEventListener('resize', () => {
-      resize();
-      createStars();
-    });
-
-    const menuToggle = document.querySelector('.menu-toggle');
-    const navLinks = document.querySelector('.nav-links');
-    menuToggle.addEventListener('click', () => {
-      navLinks.classList.toggle('open');
+    document.querySelector('.menu-toggle').addEventListener('click', () => {
+      document.querySelector('.nav-links').classList.toggle('open');
     });
   </script>
 </body>
