@@ -10,7 +10,7 @@
       --star-yellow: #f4d35e;
       --text-main: #f0e6d3;
       --text-soft: #b8a99a;
-      --page-bg: #1a2a4a;
+      --card-bg: rgba(26, 42, 74, 0.45);
     }
 
     * {
@@ -20,15 +20,11 @@
     }
 
     body {
-      font-family: 'Segoe UI', system-ui, sans-serif;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
       background-color: var(--night-deep);
       color: var(--text-main);
+      line-height: 1.6;
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      overflow-x: hidden;
     }
 
     /* Navegación */
@@ -42,11 +38,11 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: linear-gradient(to bottom, rgba(10, 20, 40, 0.9), transparent);
+      background: linear-gradient(to bottom, rgba(10, 20, 40, 0.85), transparent);
     }
 
     .logo {
-      font-family: Georgia, serif;
+      font-family: Georgia, 'Times New Roman', serif;
       font-size: 1.35rem;
       color: var(--star-yellow);
       text-decoration: none;
@@ -65,8 +61,8 @@
       font-size: 0.88rem;
       letter-spacing: 0.07em;
       text-transform: uppercase;
+      transition: color 0.3s ease;
       position: relative;
-      transition: color 0.3s;
     }
 
     .nav-links a::after {
@@ -77,7 +73,7 @@
       width: 0;
       height: 1px;
       background: var(--star-yellow);
-      transition: width 0.3s;
+      transition: width 0.3s ease;
     }
 
     .nav-links a:hover,
@@ -99,60 +95,221 @@
       cursor: pointer;
     }
 
-    /* Título de la página */
-    .book-header {
+    /* Encabezado */
+    .page-header {
+      padding: 9rem 2rem 3.5rem;
       text-align: center;
-      margin-top: 6.5rem;
-      margin-bottom: 1.5rem;
-      padding: 0 1.5rem;
+      max-width: 700px;
+      margin: 0 auto;
     }
 
-    .book-header .label {
+    .page-header .label {
       font-size: 0.8rem;
       letter-spacing: 0.25em;
       text-transform: uppercase;
       color: var(--star-yellow);
-      margin-bottom: 0.6rem;
+      margin-bottom: 1rem;
     }
 
-    .book-header h1 {
-      font-family: Georgia, serif;
-      font-size: clamp(2rem, 5vw, 2.8rem);
+    .page-header h1 {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: clamp(2.5rem, 5vw, 3.5rem);
       font-weight: 400;
+      margin-bottom: 1rem;
     }
 
-    /* ========== EL LIBRO ========== */
-    .book-container {
-      position: relative;
+    .page-header p {
+      color: var(--text-soft);
+      font-size: 1.15rem;
+    }
+
+    /* Grid de gustos */
+    .gustos-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2rem 6rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+
+    .gusto-card {
+      background: var(--card-bg);
+      border: 1px solid rgba(244, 211, 94, 0.15);
+      border-radius: 18px;
+      overflow: hidden;
+      transition: all 0.4s ease;
+      backdrop-filter: blur(8px);
+    }
+
+    .gusto-card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(244, 211, 94, 0.35);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .card-media {
       width: 100%;
-      max-width: 920px;
-      height: 520px;
-      margin: 0 auto 3rem;
-      perspective: 2000px;
+      height: 200px;
+      background: linear-gradient(145deg, #1a2a4a, #0f1c33);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-soft);
+      font-size: 0.9rem;
+      letter-spacing: 0.05em;
     }
 
-    .book {
+    .card-media img,
+    .card-media video {
       width: 100%;
       height: 100%;
-      position: relative;
-      display: flex;
-      box-shadow: 0 30px 60px rgba(0,0,0,0.5);
-      border-radius: 8px;
-      overflow: hidden;
+      object-fit: cover;
+      display: block;
     }
 
-    .page {
-      flex: 1;
-      background: var(--page-bg);
-      padding: 2.5rem 2rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      position: relative;
-      border: 1px solid rgba(244, 211, 94, 0.12);
+    .card-content {
+      padding: 1.6rem 1.5rem 1.8rem;
     }
 
-    .page.left {
-      border-right: 1px solid rgba(244, 211, 94, 0.15);
-      text-align: right;
+    .card-content h3 {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 1.35rem;
+      font-weight: 400;
+      margin-bottom: 0.6rem;
+      color: var(--star-yellow);
     }
+
+    .card-content p {
+      color: var(--text-soft);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.85rem;
+      color: var(--text-soft);
+      border-top: 1px solid rgba(244, 211, 94, 0.1);
+    }
+
+    @media (max-width: 768px) {
+      .nav {
+        padding: 1.1rem 1.5rem;
+      }
+
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: rgba(10, 20, 40, 0.97);
+        flex-direction: column;
+        padding: 1.5rem;
+        gap: 1.3rem;
+      }
+
+      .nav-links.open {
+        display: flex;
+      }
+
+      .menu-toggle {
+        display: block;
+      }
+
+      .page-header {
+        padding: 8rem 1.5rem 2.5rem;
+      }
+
+      .gustos-grid {
+        padding: 0 1.5rem 4rem;
+        gap: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <a href="index.html" class="logo">✦ Ixomar Cautela</a>
+    <button class="menu-toggle" aria-label="Abrir menú">☰</button>
+    <ul class="nav-links">
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="gustos.html" class="active">Gustos</a></li>
+      <li><a href="#">Experiencias</a></li>
+      <li><a href="#">Trabajos</a></li>
+      <li><a href="#">Contacto</a></li>
+    </ul>
+  </nav>
+
+  <header class="page-header">
+    <p class="label">Un poco de mí</p>
+    <h1>Mis gustos</h1>
+    <p>Las cosas que disfruto y que forman parte de quién soy.</p>
+  </header>
+
+  <section class="gustos-grid">
+
+    <div class="gusto-card">
+      <div class="card-media">Foto o video</div>
+      <div class="card-content">
+        <h3>Costura</h3>
+        <p>Me apasiona crear con telas e hilos. He hecho vestidos para mí y para una niña. Es una forma de transformar ideas en algo real.</p>
+      </div>
+    </div>
+
+    <div class="gusto-card">
+      <div class="card-media">Foto o video</div>
+      <div class="card-content">
+        <h3>Leer novelas</h3>
+        <p>Me encanta perderse en historias. Leer me permite viajar a otros mundos y entender mejor las emociones.</p>
+      </div>
+    </div>
+
+    <div class="gusto-card">
+      <div class="card-media">Foto o video</div>
+      <div class="card-content">
+        <h3>Sudokus</h3>
+        <p>Me gusta el reto de ordenar el caos. Resolver sudokus me relaja y mantiene mi mente activa.</p>
+      </div>
+    </div>
+
+    <div class="gusto-card">
+      <div class="card-media">Foto o video</div>
+      <div class="card-content">
+        <h3>Crear con las manos</h3>
+        <p>Siempre estoy haciendo algo nuevo: láminas, maquetas, piñatas, afiches… Crear con las manos es mi forma natural de expresarme.</p>
+      </div>
+    </div>
+
+    <div class="gusto-card">
+      <div class="card-media">Foto o video</div>
+      <div class="card-content">
+        <h3>Aprender cosas nuevas</h3>
+        <p>Me emociona empezar proyectos en los que no sé todo. Ahora estoy entrando en el mundo de las páginas web.</p>
+      </div>
+    </div>
+
+    <div class="gusto-card">
+      <div class="card-media">Foto o video</div>
+      <div class="card-content">
+        <h3>Los momentos tranquilos</h3>
+        <p>Valoro los espacios de calma: una buena lectura, crear en silencio o simplemente estar presente.</p>
+      </div>
+    </div>
+
+  </section>
+
+  <footer>
+    <p>© 2026 Ixomar Cautela</p>
+  </footer>
+
+  <script>
+    document.querySelector('.menu-toggle').addEventListener('click', () => {
+      document.querySelector('.nav-links').classList.toggle('open');
+    });
+  </script>
+</body>
+</html>
