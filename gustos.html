@@ -10,7 +10,6 @@
       --star-yellow: #f4d35e;
       --text-main: #f0e6d3;
       --text-soft: #b8a99a;
-      --card-bg: rgba(26, 42, 74, 0.45);
     }
 
     * {
@@ -19,15 +18,18 @@
       box-sizing: border-box;
     }
 
-    body {
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-      background-color: var(--night-deep);
-      color: var(--text-main);
-      line-height: 1.6;
-      min-height: 100vh;
+    html {
+      scroll-behavior: smooth;
     }
 
-    /* Navegación (igual que en el inicio) */
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background-color: var(--night-deep);
+      color: var(--text-main);
+      overflow-x: hidden;
+    }
+
+    /* Navegación */
     .nav {
       position: fixed;
       top: 0;
@@ -38,11 +40,11 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: linear-gradient(to bottom, rgba(10, 20, 40, 0.85), transparent);
+      background: linear-gradient(to bottom, rgba(10, 20, 40, 0.9), transparent);
     }
 
     .logo {
-      font-family: Georgia, 'Times New Roman', serif;
+      font-family: Georgia, serif;
       font-size: 1.35rem;
       color: var(--star-yellow);
       text-decoration: none;
@@ -61,8 +63,8 @@
       font-size: 0.88rem;
       letter-spacing: 0.07em;
       text-transform: uppercase;
-      transition: color 0.3s ease;
       position: relative;
+      transition: color 0.3s;
     }
 
     .nav-links a::after {
@@ -73,7 +75,7 @@
       width: 0;
       height: 1px;
       background: var(--star-yellow);
-      transition: width 0.3s ease;
+      transition: width 0.3s;
     }
 
     .nav-links a:hover,
@@ -95,110 +97,215 @@
       cursor: pointer;
     }
 
-    /* Encabezado */
-    .page-header {
-      padding: 9rem 2rem 3.5rem;
+    /* Intro de la página */
+    .intro {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       text-align: center;
-      max-width: 700px;
-      margin: 0 auto;
+      padding: 2rem;
+      position: relative;
     }
 
-    .page-header .label {
-      font-size: 0.8rem;
-      letter-spacing: 0.25em;
+    .intro .label {
+      font-size: 0.85rem;
+      letter-spacing: 0.28em;
       text-transform: uppercase;
       color: var(--star-yellow);
-      margin-bottom: 1rem;
+      margin-bottom: 1.2rem;
     }
 
-    .page-header h1 {
-      font-family: Georgia, 'Times New Roman', serif;
-      font-size: clamp(2.5rem, 5vw, 3.5rem);
+    .intro h1 {
+      font-family: Georgia, serif;
+      font-size: clamp(2.8rem, 6vw, 4rem);
       font-weight: 400;
       margin-bottom: 1rem;
     }
 
-    .page-header p {
+    .intro p {
       color: var(--text-soft);
       font-size: 1.15rem;
+      max-width: 450px;
     }
 
-    /* Grid de gustos */
-    .gustos-grid {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 2rem 6rem;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 2rem;
+    .scroll-hint {
+      position: absolute;
+      bottom: 2.5rem;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      color: var(--text-soft);
+      opacity: 0.7;
     }
 
-    /* Tarjeta con espacio para imagen/video */
-    .gusto-card {
-      background: var(--card-bg);
-      border: 1px solid rgba(244, 211, 94, 0.15);
-      border-radius: 18px;
+    /* ========== EL ROLLO VERTICAL ========== */
+    .roll {
+      scroll-snap-type: y mandatory;
+    }
+
+    .roll-item {
+      height: 100vh;
+      scroll-snap-align: start;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       overflow: hidden;
-      transition: all 0.4s ease;
-      backdrop-filter: blur(8px);
+      cursor: pointer;
     }
 
-    .gusto-card:hover {
-      transform: translateY(-8px);
-      border-color: rgba(244, 211, 94, 0.35);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-    }
-
-    /* Zona de imagen / video (placeholder) */
-    .card-media {
-      width: 100%;
-      height: 200px;
+    /* Zona de media (foto/video) */
+    .roll-media {
+      position: absolute;
+      inset: 0;
       background: linear-gradient(145deg, #1a2a4a, #0f1c33);
       display: flex;
       align-items: center;
       justify-content: center;
       color: var(--text-soft);
-      font-size: 0.9rem;
+      font-size: 1rem;
       letter-spacing: 0.05em;
-      position: relative;
     }
 
-    /* Cuando pongas imagen o video real: */
-    .card-media img,
-    .card-media video {
+    .roll-media img,
+    .roll-media video {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      display: block;
     }
 
-    .card-content {
-      padding: 1.6rem 1.5rem 1.8rem;
+    /* Contenido de texto sobre el media */
+    .roll-content {
+      position: relative;
+      z-index: 2;
+      max-width: 600px;
+      padding: 2.5rem;
+      background: rgba(10, 20, 40, 0.72);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(244, 211, 94, 0.2);
+      border-radius: 20px;
+      text-align: center;
+      transition: all 0.4s ease;
     }
 
-    .card-content h3 {
-      font-family: Georgia, 'Times New Roman', serif;
-      font-size: 1.35rem;
+    .roll-content h2 {
+      font-family: Georgia, serif;
+      font-size: 2rem;
       font-weight: 400;
-      margin-bottom: 0.6rem;
       color: var(--star-yellow);
+      margin-bottom: 1rem;
     }
 
-    .card-content p {
+    .roll-content p {
       color: var(--text-soft);
-      font-size: 0.95rem;
+      font-size: 1.05rem;
       line-height: 1.6;
     }
 
-    footer {
-      text-align: center;
-      padding: 2rem;
-      font-size: 0.85rem;
+    .roll-item:hover .roll-content {
+      border-color: rgba(244, 211, 94, 0.45);
+      transform: scale(1.02);
+    }
+
+    /* ========== MODAL (se abre en horizontal) ========== */
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(5, 10, 20, 0.92);
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.4s ease;
+      padding: 1.5rem;
+    }
+
+    .modal.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-inner {
+      width: 100%;
+      max-width: 950px;
+      background: #0f1c33;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid rgba(244, 211, 94, 0.25);
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      transform: scale(0.92);
+      transition: transform 0.4s ease;
+    }
+
+    .modal.open .modal-inner {
+      transform: scale(1);
+    }
+
+    .modal-media {
+      background: #1a2a4a;
+      min-height: 360px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       color: var(--text-soft);
-      border-top: 1px solid rgba(244, 211, 94, 0.1);
+    }
+
+    .modal-media img,
+    .modal-media video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .modal-text {
+      padding: 2.5rem 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .modal-text h3 {
+      font-family: Georgia, serif;
+      font-size: 1.8rem;
+      color: var(--star-yellow);
+      margin-bottom: 1rem;
+    }
+
+    .modal-text p {
+      color: var(--text-soft);
+      font-size: 1.05rem;
+      line-height: 1.65;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      background: none;
+      border: none;
+      color: var(--star-yellow);
+      font-size: 1.8rem;
+      cursor: pointer;
+      z-index: 10;
     }
 
     /* Responsive */
+    @media (max-width: 800px) {
+      .modal-inner {
+        grid-template-columns: 1fr;
+        max-height: 90vh;
+        overflow-y: auto;
+      }
+
+      .modal-media {
+        min-height: 220px;
+      }
+    }
+
     @media (max-width: 768px) {
       .nav {
         padding: 1.1rem 1.5rem;
@@ -224,13 +331,13 @@
         display: block;
       }
 
-      .page-header {
-        padding: 8rem 1.5rem 2.5rem;
+      .roll-content {
+        margin: 0 1.2rem;
+        padding: 1.8rem 1.5rem;
       }
 
-      .gustos-grid {
-        padding: 0 1.5rem 4rem;
-        gap: 1.5rem;
+      .roll-content h2 {
+        font-size: 1.6rem;
       }
     }
   </style>
@@ -240,110 +347,99 @@
   <!-- Navegación -->
   <nav class="nav">
     <a href="index.html" class="logo">✦ Ixomar Cautela</a>
-    <button class="menu-toggle" aria-label="Abrir menú">☰</button>
+    <button class="menu-toggle">☰</button>
     <ul class="nav-links">
-      <li><a href="index.html" class="active">Inicio</a></li>
-      <li><a href="gustos.html">Gustos</a></li>
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="gustos.html" class="active">Gustos</a></li>
       <li><a href="#">Experiencias</a></li>
       <li><a href="#">Trabajos</a></li>
       <li><a href="#">Contacto</a></li>
     </ul>
   </nav>
 
-  <!-- Encabezado -->
-  <header class="page-header">
+  <!-- Intro -->
+  <section class="intro">
     <p class="label">Un poco de mí</p>
     <h1>Mis gustos</h1>
-    <p>Las cosas que disfruto y que forman parte de quién soy.</p>
-  </header>
-
-  <!-- Grid de gustos -->
-  <section class="gustos-grid">
-
-    <!-- Tarjeta 1 -->
-    <div class="gusto-card">
-      <div class="card-media">
-        Foto o video
-        <!-- Cuando tengas el archivo:
-        <img src="costura.jpg" alt="Costura">
-        o
-        <video src="costura.mp4" muted loop playsinline></video>
-        -->
-      </div>
-      <div class="card-content">
-        <h3>Costura</h3>
-        <p>Me apasiona crear con telas e hilos. He hecho vestidos para mí y para una niña. Es una forma de transformar ideas en algo real.</p>
-      </div>
-    </div>
-
-    <!-- Tarjeta 2 -->
-    <div class="gusto-card">
-      <div class="card-media">
-        Foto o video
-      </div>
-      <div class="card-content">
-        <h3>Leer novelas</h3>
-        <p>Me encanta perderse en historias. Leer me permite viajar a otros mundos y entender mejor las emociones.</p>
-      </div>
-    </div>
-
-    <!-- Tarjeta 3 -->
-    <div class="gusto-card">
-      <div class="card-media">
-        Foto o video
-      </div>
-      <div class="card-content">
-        <h3>Sudokus</h3>
-        <p>Me gusta el reto de ordenar el caos. Resolver sudokus me relaja y mantiene mi mente activa.</p>
-      </div>
-    </div>
-
-    <!-- Tarjeta 4 -->
-    <div class="gusto-card">
-      <div class="card-media">
-        Foto o video
-      </div>
-      <div class="card-content">
-        <h3>Crear con las manos</h3>
-        <p>Siempre estoy haciendo algo nuevo: láminas, maquetas, piñatas, afiches… Crear con las manos es mi forma natural de expresarme.</p>
-      </div>
-    </div>
-
-    <!-- Tarjeta 5 -->
-    <div class="gusto-card">
-      <div class="card-media">
-        Foto o video
-      </div>
-      <div class="card-content">
-        <h3>Aprender cosas nuevas</h3>
-        <p>Me emociona empezar proyectos en los que no sé todo. Ahora estoy entrando en el mundo de las páginas web.</p>
-      </div>
-    </div>
-
-    <!-- Tarjeta 6 -->
-    <div class="gusto-card">
-      <div class="card-media">
-        Foto o video
-      </div>
-      <div class="card-content">
-        <h3>Los momentos tranquilos</h3>
-        <p>Valoro los espacios de calma: una buena lectura, crear en silencio o simplemente estar presente.</p>
-      </div>
-    </div>
-
+    <p>Desliza hacia abajo y descubre las cosas que forman parte de quién soy.</p>
+    <div class="scroll-hint">↓ Desliza</div>
   </section>
 
-  <footer>
-    <p>© 2026 Ixomar Cautela</p>
-  </footer>
+  <!-- EL ROLLO VERTICAL -->
+  <div class="roll">
+
+    <!-- 1. Costura -->
+    <section class="roll-item" data-title="Costura" data-text="Me apasiona crear con telas e hilos. He hecho vestidos para mí y para una niña. Es una forma de transformar ideas en algo real.">
+      <div class="roll-media">Foto o video de costura</div>
+      <div class="roll-content">
+        <h2>Costura</h2>
+        <p>Me apasiona crear con telas e hilos. He hecho vestidos para mí y para una niña.</p>
+      </div>
+    </section>
+
+    <!-- 2. Leer novelas -->
+    <section class="roll-item" data-title="Leer novelas" data-text="Me encanta perderse en historias. Leer me permite viajar a otros mundos y entender mejor las emociones.">
+      <div class="roll-media">Foto o video leyendo</div>
+      <div class="roll-content">
+        <h2>Leer novelas</h2>
+        <p>Me encanta perderse en historias. Leer me permite viajar a otros mundos.</p>
+      </div>
+    </section>
+
+    <!-- 3. Sudokus -->
+    <section class="roll-item" data-title="Sudokus" data-text="Me gusta el reto de ordenar el caos. Resolver sudokus me relaja y mantiene mi mente activa.">
+      <div class="roll-media">Foto o video de sudoku</div>
+      <div class="roll-content">
+        <h2>Sudokus</h2>
+        <p>Me gusta el reto de ordenar el caos. Resolver sudokus me relaja.</p>
+      </div>
+    </section>
+
+    <!-- 4. Crear con las manos -->
+    <section class="roll-item" data-title="Crear con las manos" data-text="Siempre estoy haciendo algo nuevo: láminas, maquetas, piñatas, afiches… Crear con las manos es mi forma natural de expresarme.">
+      <div class="roll-media">Foto o video creando</div>
+      <div class="roll-content">
+        <h2>Crear con las manos</h2>
+        <p>Siempre estoy haciendo algo nuevo. Crear con las manos es mi forma natural de expresarme.</p>
+      </div>
+    </section>
+
+    <!-- 5. Aprender -->
+    <section class="roll-item" data-title="Aprender cosas nuevas" data-text="Me emociona empezar proyectos en los que no sé todo. Ahora estoy entrando en el mundo de las páginas web y el diseño digital.">
+      <div class="roll-media">Foto o video aprendiendo</div>
+      <div class="roll-content">
+        <h2>Aprender cosas nuevas</h2>
+        <p>Me emociona empezar proyectos en los que no sé todo.</p>
+      </div>
+    </section>
+
+    <!-- 6. Momentos tranquilos -->
+    <section class="roll-item" data-title="Los momentos tranquilos" data-text="Valoro los espacios de calma: una buena lectura, crear en silencio o simplemente estar presente con lo que estoy haciendo.">
+      <div class="roll-media">Foto o video de calma</div>
+      <div class="roll-content">
+        <h2>Los momentos tranquilos</h2>
+        <p>Valoro los espacios de calma y estar presente con lo que estoy haciendo.</p>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Modal que se abre en horizontal -->
+  <div class="modal" id="modal">
+    <button class="modal-close" id="modal-close">×</button>
+    <div class="modal-inner">
+      <div class="modal-media" id="modal-media">
+        Aquí se verá la foto o el video en grande
+      </div>
+      <div class="modal-text">
+        <h3 id="modal-title">Título</h3>
+        <p id="modal-text">Texto completo</p>
+      </div>
+    </div>
+  </div>
 
   <script>
-    const menuToggle = document.querySelector('.menu-toggle');
-    const navLinks = document.querySelector('.nav-links');
-
-    menuToggle.addEventListener('click', () => {
-      navLinks.classList.toggle('open');
+    // Menú móvil
+    document.querySelector('.menu-toggle').addEventListener('click', () => {
+      document.querySelector('.nav-links').classList.toggle('open');
     });
-  </script>
-</body>
-</html>
