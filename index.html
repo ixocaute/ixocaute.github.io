@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ixomar Cautela</title>
+  <title>Gustos | Ixomar Cautela</title>
   <style>
     :root {
       --night-deep: #0a1428;
       --star-yellow: #f4d35e;
-      --moon: #f7e9a0;
       --text-main: #f0e6d3;
       --text-soft: #b8a99a;
+      --card-bg: rgba(26, 42, 74, 0.45);
     }
 
     * {
@@ -23,40 +23,11 @@
       font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
       background-color: var(--night-deep);
       color: var(--text-main);
-      overflow-x: hidden;
+      line-height: 1.6;
       min-height: 100vh;
     }
 
-    #star-canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-    }
-
-    .moon {
-      position: fixed;
-      top: 12%;
-      right: 12%;
-      width: 90px;
-      height: 90px;
-      background: radial-gradient(circle at 35% 35%, var(--moon), #e8c86a 60%, #c9a84c);
-      border-radius: 50%;
-      box-shadow: 
-        0 0 40px rgba(244, 211, 94, 0.4),
-        0 0 80px rgba(244, 211, 94, 0.2);
-      z-index: 0;
-      animation: moonGlow 6s ease-in-out infinite alternate;
-    }
-
-    @keyframes moonGlow {
-      from { box-shadow: 0 0 40px rgba(244, 211, 94, 0.35), 0 0 80px rgba(244, 211, 94, 0.15); }
-      to   { box-shadow: 0 0 55px rgba(244, 211, 94, 0.5), 0 0 100px rgba(244, 211, 94, 0.25); }
-    }
-
-    /* Navegación */
+    /* Navegación (igual que en el inicio) */
     .nav {
       position: fixed;
       top: 0;
@@ -67,7 +38,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: linear-gradient(to bottom, rgba(10, 20, 40, 0.75), transparent);
+      background: linear-gradient(to bottom, rgba(10, 20, 40, 0.85), transparent);
     }
 
     .logo {
@@ -105,11 +76,13 @@
       transition: width 0.3s ease;
     }
 
-    .nav-links a:hover {
+    .nav-links a:hover,
+    .nav-links a.active {
       color: var(--star-yellow);
     }
 
-    .nav-links a:hover::after {
+    .nav-links a:hover::after,
+    .nav-links a.active::after {
       width: 100%;
     }
 
@@ -122,228 +95,110 @@
       cursor: pointer;
     }
 
-    /* ========== HERO ========== */
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 7rem 2rem 5rem;
-      position: relative;
-      z-index: 1;
-      gap: 4rem;
-      max-width: 1200px;
+    /* Encabezado */
+    .page-header {
+      padding: 9rem 2rem 3.5rem;
+      text-align: center;
+      max-width: 700px;
       margin: 0 auto;
     }
 
-    .hero-text {
-      flex: 1;
-      max-width: 520px;
-    }
-
-    .hero-tag {
-      font-size: 0.85rem;
-      letter-spacing: 0.28em;
+    .page-header .label {
+      font-size: 0.8rem;
+      letter-spacing: 0.25em;
       text-transform: uppercase;
       color: var(--star-yellow);
-      margin-bottom: 1.3rem;
-      opacity: 0;
-      animation: fadeUp 1.2s 0.3s forwards;
+      margin-bottom: 1rem;
     }
 
-    .hero h1 {
+    .page-header h1 {
       font-family: Georgia, 'Times New Roman', serif;
-      font-size: clamp(2.6rem, 5.5vw, 3.8rem);
+      font-size: clamp(2.5rem, 5vw, 3.5rem);
       font-weight: 400;
-      line-height: 1.15;
-      margin-bottom: 1.3rem;
-      opacity: 0;
-      animation: fadeUp 1.2s 0.5s forwards;
+      margin-bottom: 1rem;
     }
 
-    .hero h1 span {
-      color: var(--star-yellow);
-      font-style: italic;
-      display: block;
-      margin-top: 0.15em;
-    }
-
-    .hero-subtitle {
-      font-size: 1.15rem;
+    .page-header p {
       color: var(--text-soft);
-      line-height: 1.6;
-      margin-bottom: 2.5rem;
-      opacity: 0;
-      animation: fadeUp 1.2s 0.7s forwards;
+      font-size: 1.15rem;
     }
 
-    .hero-cta {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.6rem;
-      padding: 0.95rem 2.1rem;
-      background: transparent;
-      border: 1px solid var(--star-yellow);
-      color: var(--star-yellow);
-      text-decoration: none;
-      font-size: 0.88rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      border-radius: 50px;
-      transition: all 0.4s ease;
-      opacity: 0;
-      animation: fadeUp 1.2s 0.9s forwards;
+    /* Grid de gustos */
+    .gustos-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2rem 6rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
     }
 
-    .hero-cta:hover {
-      background: var(--star-yellow);
-      color: var(--night-deep);
-      box-shadow: 0 0 28px rgba(244, 211, 94, 0.35);
-    }
-
-    /* Zona de fotos */
-    .hero-photos {
-      flex: 1;
-      position: relative;
-      height: 480px;
-      max-width: 460px;
-      opacity: 0;
-      animation: fadeUp 1.2s 0.6s forwards;
-    }
-
-    .photo-main {
-      position: absolute;
-      width: 280px;
-      height: 360px;
-      top: 40px;
-      left: 50%;
-      transform: translateX(-50%);
-      border-radius: 20px;
+    /* Tarjeta con espacio para imagen/video */
+    .gusto-card {
+      background: var(--card-bg);
+      border: 1px solid rgba(244, 211, 94, 0.15);
+      border-radius: 18px;
       overflow: hidden;
+      transition: all 0.4s ease;
+      backdrop-filter: blur(8px);
+    }
+
+    .gusto-card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(244, 211, 94, 0.35);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Zona de imagen / video (placeholder) */
+    .card-media {
+      width: 100%;
+      height: 200px;
       background: linear-gradient(145deg, #1a2a4a, #0f1c33);
-      border: 1px solid rgba(244, 211, 94, 0.25);
-      box-shadow: 0 20px 50px rgba(0,0,0,0.4),
-                  0 0 30px rgba(244, 211, 94, 0.1);
       display: flex;
       align-items: center;
       justify-content: center;
       color: var(--text-soft);
       font-size: 0.9rem;
       letter-spacing: 0.05em;
-      text-align: center;
-      z-index: 2;
+      position: relative;
     }
 
-    .photo-secondary {
-      position: absolute;
-      border-radius: 14px;
-      overflow: hidden;
-      background: linear-gradient(145deg, #1a2a4a, #0f1c33);
-      border: 1px solid rgba(244, 211, 94, 0.2);
-      box-shadow: 0 12px 30px rgba(0,0,0,0.35);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--text-soft);
-      font-size: 0.8rem;
-      letter-spacing: 0.04em;
-      text-align: center;
-      z-index: 1;
-    }
-
-    .photo-2 {
-      width: 150px;
-      height: 190px;
-      top: 0;
-      left: 0;
-      transform: rotate(-6deg);
-    }
-
-    .photo-3 {
-      width: 140px;
-      height: 170px;
-      bottom: 20px;
-      right: 10px;
-      transform: rotate(5deg);
-    }
-
-    .photo-4 {
-      width: 110px;
-      height: 130px;
-      bottom: 0;
-      left: 30px;
-      transform: rotate(-3deg);
-      z-index: 3;
-    }
-
-    .photo-main img,
-    .photo-secondary img {
+    /* Cuando pongas imagen o video real: */
+    .card-media img,
+    .card-media video {
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
     }
 
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(25px); }
-      to   { opacity: 1; transform: translateY(0); }
+    .card-content {
+      padding: 1.6rem 1.5rem 1.8rem;
     }
 
-    /* ========== MÓVIL ========== */
-    @media (max-width: 900px) {
-      .hero {
-        flex-direction: column;
-        padding: 7rem 1.5rem 5rem;
-        gap: 2.5rem;
-        text-align: center;
-      }
-
-      .hero-text {
-        max-width: 100%;
-        order: 1;
-      }
-
-      .hero-photos {
-        order: 2;
-        height: 420px;
-        width: 100%;
-        max-width: 320px;
-        margin: 1.5rem auto 0;
-      }
-
-      .photo-main {
-        width: 210px;
-        height: 280px;
-        top: 50px;
-        left: 50%;
-        transform: translateX(-50%);
-      }
-
-      .photo-2 {
-        width: 115px;
-        height: 145px;
-        top: 10px;
-        left: 0;
-        transform: rotate(-6deg);
-      }
-
-      .photo-3 {
-        width: 110px;
-        height: 135px;
-        top: 0;
-        right: 0;
-        transform: rotate(5deg);
-      }
-
-      .photo-4 {
-        width: 100px;
-        height: 120px;
-        bottom: 10px;
-        left: 20px;
-        transform: rotate(-3deg);
-      }
+    .card-content h3 {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 1.35rem;
+      font-weight: 400;
+      margin-bottom: 0.6rem;
+      color: var(--star-yellow);
     }
 
+    .card-content p {
+      color: var(--text-soft);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.85rem;
+      color: var(--text-soft);
+      border-top: 1px solid rgba(244, 211, 94, 0.1);
+    }
+
+    /* Responsive */
     @media (max-width: 768px) {
       .nav {
         padding: 1.1rem 1.5rem;
@@ -369,119 +224,123 @@
         display: block;
       }
 
-      .moon {
-        width: 55px;
-        height: 55px;
-        top: 9%;
-        right: 7%;
+      .page-header {
+        padding: 8rem 1.5rem 2.5rem;
+      }
+
+      .gustos-grid {
+        padding: 0 1.5rem 4rem;
+        gap: 1.5rem;
       }
     }
   </style>
 </head>
 <body>
 
-  <canvas id="star-canvas"></canvas>
-  <div class="moon"></div>
-
+  <!-- Navegación -->
   <nav class="nav">
     <a href="index.html" class="logo">✦ Ixomar Cautela</a>
     <button class="menu-toggle" aria-label="Abrir menú">☰</button>
     <ul class="nav-links">
       <li><a href="index.html">Inicio</a></li>
-      <li><a href="gustos.html">Gustos</a></li>
-      <li><a href="experiencias.html">Experiencias</a></li>
-      <li><a href="trabajos.html">Trabajos</a></li>
-      <li><a href="contacto.html">Contacto</a></li>
+      <li><a href="gustos.html" class="active">Gustos</a></li>
+      <li><a href="#">Experiencias</a></li>
+      <li><a href="#">Trabajos</a></li>
+      <li><a href="#">Contacto</a></li>
     </ul>
   </nav>
 
-  <section class="hero">
-    <!-- Texto -->
-    <div class="hero-text">
-      <p class="hero-tag">Te doy la bienvenida</p>
-      <h1>Ixomar Cautela<br><span>De la imaginación a la realidad</span></h1>
-      <p class="hero-subtitle">
-        Aquí te muestro quien soy:<br>
-        Creativa · Multifacética · En constante aprendizaje.
-      </p>
-      <a href="gustos.html" class="hero-cta">Explorar →</a>
+  <!-- Encabezado -->
+  <header class="page-header">
+    <p class="label">Un poco de mí</p>
+    <h1>Mis gustos</h1>
+    <p>Las cosas que disfruto y que forman parte de quién soy.</p>
+  </header>
+
+  <!-- Grid de gustos -->
+  <section class="gustos-grid">
+
+    <!-- Tarjeta 1 -->
+    <div class="gusto-card">
+      <div class="card-media">
+        Foto o video
+        <!-- Cuando tengas el archivo:
+        <img src="costura.jpg" alt="Costura">
+        o
+        <video src="costura.mp4" muted loop playsinline></video>
+        -->
+      </div>
+      <div class="card-content">
+        <h3>Costura</h3>
+        <p>Me apasiona crear con telas e hilos. He hecho vestidos para mí y para una niña. Es una forma de transformar ideas en algo real.</p>
+      </div>
     </div>
 
-    <!-- Fotos -->
-    <div class="hero-photos">
-      <div class="photo-main">
-        Foto principal<br>
-        <small style="opacity:0.6">(recomendado vertical)</small>
+    <!-- Tarjeta 2 -->
+    <div class="gusto-card">
+      <div class="card-media">
+        Foto o video
       </div>
-      <div class="photo-secondary photo-2">Foto 2</div>
-      <div class="photo-secondary photo-3">Foto 3</div>
-      <div class="photo-secondary photo-4">Foto 4</div>
+      <div class="card-content">
+        <h3>Leer novelas</h3>
+        <p>Me encanta perderse en historias. Leer me permite viajar a otros mundos y entender mejor las emociones.</p>
+      </div>
     </div>
+
+    <!-- Tarjeta 3 -->
+    <div class="gusto-card">
+      <div class="card-media">
+        Foto o video
+      </div>
+      <div class="card-content">
+        <h3>Sudokus</h3>
+        <p>Me gusta el reto de ordenar el caos. Resolver sudokus me relaja y mantiene mi mente activa.</p>
+      </div>
+    </div>
+
+    <!-- Tarjeta 4 -->
+    <div class="gusto-card">
+      <div class="card-media">
+        Foto o video
+      </div>
+      <div class="card-content">
+        <h3>Crear con las manos</h3>
+        <p>Siempre estoy haciendo algo nuevo: láminas, maquetas, piñatas, afiches… Crear con las manos es mi forma natural de expresarme.</p>
+      </div>
+    </div>
+
+    <!-- Tarjeta 5 -->
+    <div class="gusto-card">
+      <div class="card-media">
+        Foto o video
+      </div>
+      <div class="card-content">
+        <h3>Aprender cosas nuevas</h3>
+        <p>Me emociona empezar proyectos en los que no sé todo. Ahora estoy entrando en el mundo de las páginas web.</p>
+      </div>
+    </div>
+
+    <!-- Tarjeta 6 -->
+    <div class="gusto-card">
+      <div class="card-media">
+        Foto o video
+      </div>
+      <div class="card-content">
+        <h3>Los momentos tranquilos</h3>
+        <p>Valoro los espacios de calma: una buena lectura, crear en silencio o simplemente estar presente.</p>
+      </div>
+    </div>
+
   </section>
 
+  <footer>
+    <p>© 2026 Ixomar Cautela</p>
+  </footer>
+
   <script>
-    const canvas = document.getElementById('star-canvas');
-    const ctx = canvas.getContext('2d');
-    let stars = [];
-    let width, height;
-
-    function resize() {
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
-    }
-
-    function createStars() {
-      stars = [];
-      const count = Math.floor((width * height) / 3200);
-      for (let i = 0; i < count; i++) {
-        stars.push({
-          x: Math.random() * width,
-          y: Math.random() * height,
-          radius: Math.random() * 1.6 + 0.3,
-          opacity: Math.random(),
-          twinkleSpeed: Math.random() * 0.02 + 0.005,
-          twinkleDirection: Math.random() > 0.5 ? 1 : -1
-        });
-      }
-    }
-
-    function draw() {
-      ctx.fillStyle = '#0a1428';
-      ctx.fillRect(0, 0, width, height);
-
-      stars.forEach(star => {
-        star.opacity += star.twinkleSpeed * star.twinkleDirection;
-        if (star.opacity >= 1 || star.opacity <= 0.2) {
-          star.twinkleDirection *= -1;
-        }
-
-        ctx.beginPath();
-        ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255, 236, 139, ${star.opacity})`;
-        ctx.fill();
-
-        if (star.radius > 1.2) {
-          ctx.beginPath();
-          ctx.arc(star.x, star.y, star.radius * 2.5, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(244, 211, 94, ${star.opacity * 0.15})`;
-          ctx.fill();
-        }
-      });
-
-      requestAnimationFrame(draw);
-    }
-
-    resize();
-    createStars();
-    draw();
-
-    window.addEventListener('resize', () => {
-      resize();
-      createStars();
-    });
-
     const menuToggle = document.querySelector('.menu-toggle');
     const navLinks = document.querySelector('.nav-links');
+
     menuToggle.addEventListener('click', () => {
       navLinks.classList.toggle('open');
     });
