@@ -10,6 +10,7 @@
       --star-yellow: #f4d35e;
       --text-main: #f0e6d3;
       --text-soft: #b8a99a;
+      --page-bg: #1a2a4a;
     }
 
     * {
@@ -18,14 +19,15 @@
       box-sizing: border-box;
     }
 
-    html {
-      scroll-behavior: smooth;
-    }
-
     body {
       font-family: 'Segoe UI', system-ui, sans-serif;
       background-color: var(--night-deep);
       color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
       overflow-x: hidden;
     }
 
@@ -97,349 +99,60 @@
       cursor: pointer;
     }
 
-    /* Intro de la página */
-    .intro {
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
+    /* Título de la página */
+    .book-header {
       text-align: center;
-      padding: 2rem;
-      position: relative;
+      margin-top: 6.5rem;
+      margin-bottom: 1.5rem;
+      padding: 0 1.5rem;
     }
 
-    .intro .label {
-      font-size: 0.85rem;
-      letter-spacing: 0.28em;
+    .book-header .label {
+      font-size: 0.8rem;
+      letter-spacing: 0.25em;
       text-transform: uppercase;
       color: var(--star-yellow);
-      margin-bottom: 1.2rem;
+      margin-bottom: 0.6rem;
     }
 
-    .intro h1 {
+    .book-header h1 {
       font-family: Georgia, serif;
-      font-size: clamp(2.8rem, 6vw, 4rem);
+      font-size: clamp(2rem, 5vw, 2.8rem);
       font-weight: 400;
-      margin-bottom: 1rem;
     }
 
-    .intro p {
-      color: var(--text-soft);
-      font-size: 1.15rem;
-      max-width: 450px;
-    }
-
-    .scroll-hint {
-      position: absolute;
-      bottom: 2.5rem;
-      font-size: 0.75rem;
-      letter-spacing: 0.2em;
-      color: var(--text-soft);
-      opacity: 0.7;
-    }
-
-    /* ========== EL ROLLO VERTICAL ========== */
-    .roll {
-      scroll-snap-type: y mandatory;
-    }
-
-    .roll-item {
-      height: 100vh;
-      scroll-snap-align: start;
+    /* ========== EL LIBRO ========== */
+    .book-container {
       position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      cursor: pointer;
+      width: 100%;
+      max-width: 920px;
+      height: 520px;
+      margin: 0 auto 3rem;
+      perspective: 2000px;
     }
 
-    /* Zona de media (foto/video) */
-    .roll-media {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(145deg, #1a2a4a, #0f1c33);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--text-soft);
-      font-size: 1rem;
-      letter-spacing: 0.05em;
-    }
-
-    .roll-media img,
-    .roll-media video {
+    .book {
       width: 100%;
       height: 100%;
-      object-fit: cover;
-    }
-
-    /* Contenido de texto sobre el media */
-    .roll-content {
       position: relative;
-      z-index: 2;
-      max-width: 600px;
-      padding: 2.5rem;
-      background: rgba(10, 20, 40, 0.72);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(244, 211, 94, 0.2);
-      border-radius: 20px;
-      text-align: center;
-      transition: all 0.4s ease;
-    }
-
-    .roll-content h2 {
-      font-family: Georgia, serif;
-      font-size: 2rem;
-      font-weight: 400;
-      color: var(--star-yellow);
-      margin-bottom: 1rem;
-    }
-
-    .roll-content p {
-      color: var(--text-soft);
-      font-size: 1.05rem;
-      line-height: 1.6;
-    }
-
-    .roll-item:hover .roll-content {
-      border-color: rgba(244, 211, 94, 0.45);
-      transform: scale(1.02);
-    }
-
-    /* ========== MODAL (se abre en horizontal) ========== */
-    .modal {
-      position: fixed;
-      inset: 0;
-      background: rgba(5, 10, 20, 0.92);
-      z-index: 200;
       display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      visibility: hidden;
-      transition: all 0.4s ease;
-      padding: 1.5rem;
-    }
-
-    .modal.open {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    .modal-inner {
-      width: 100%;
-      max-width: 950px;
-      background: #0f1c33;
-      border-radius: 20px;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+      border-radius: 8px;
       overflow: hidden;
-      border: 1px solid rgba(244, 211, 94, 0.25);
-      display: grid;
-      grid-template-columns: 1.4fr 1fr;
-      transform: scale(0.92);
-      transition: transform 0.4s ease;
     }
 
-    .modal.open .modal-inner {
-      transform: scale(1);
-    }
-
-    .modal-media {
-      background: #1a2a4a;
-      min-height: 360px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--text-soft);
-    }
-
-    .modal-media img,
-    .modal-media video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .modal-text {
+    .page {
+      flex: 1;
+      background: var(--page-bg);
       padding: 2.5rem 2rem;
       display: flex;
       flex-direction: column;
       justify-content: center;
+      position: relative;
+      border: 1px solid rgba(244, 211, 94, 0.12);
     }
 
-    .modal-text h3 {
-      font-family: Georgia, serif;
-      font-size: 1.8rem;
-      color: var(--star-yellow);
-      margin-bottom: 1rem;
+    .page.left {
+      border-right: 1px solid rgba(244, 211, 94, 0.15);
+      text-align: right;
     }
-
-    .modal-text p {
-      color: var(--text-soft);
-      font-size: 1.05rem;
-      line-height: 1.65;
-    }
-
-    .modal-close {
-      position: absolute;
-      top: 1.5rem;
-      right: 1.5rem;
-      background: none;
-      border: none;
-      color: var(--star-yellow);
-      font-size: 1.8rem;
-      cursor: pointer;
-      z-index: 10;
-    }
-
-    /* Responsive */
-    @media (max-width: 800px) {
-      .modal-inner {
-        grid-template-columns: 1fr;
-        max-height: 90vh;
-        overflow-y: auto;
-      }
-
-      .modal-media {
-        min-height: 220px;
-      }
-    }
-
-    @media (max-width: 768px) {
-      .nav {
-        padding: 1.1rem 1.5rem;
-      }
-
-      .nav-links {
-        display: none;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        background: rgba(10, 20, 40, 0.97);
-        flex-direction: column;
-        padding: 1.5rem;
-        gap: 1.3rem;
-      }
-
-      .nav-links.open {
-        display: flex;
-      }
-
-      .menu-toggle {
-        display: block;
-      }
-
-      .roll-content {
-        margin: 0 1.2rem;
-        padding: 1.8rem 1.5rem;
-      }
-
-      .roll-content h2 {
-        font-size: 1.6rem;
-      }
-    }
-  </style>
-</head>
-<body>
-
-  <!-- Navegación -->
-  <nav class="nav">
-    <a href="index.html" class="logo">✦ Ixomar Cautela</a>
-    <button class="menu-toggle">☰</button>
-    <ul class="nav-links">
-      <li><a href="index.html">Inicio</a></li>
-      <li><a href="gustos.html" class="active">Gustos</a></li>
-      <li><a href="#">Experiencias</a></li>
-      <li><a href="#">Trabajos</a></li>
-      <li><a href="#">Contacto</a></li>
-    </ul>
-  </nav>
-
-  <!-- Intro -->
-  <section class="intro">
-    <p class="label">Un poco de mí</p>
-    <h1>Mis gustos</h1>
-    <p>Desliza hacia abajo y descubre las cosas que forman parte de quién soy.</p>
-    <div class="scroll-hint">↓ Desliza</div>
-  </section>
-
-  <!-- EL ROLLO VERTICAL -->
-  <div class="roll">
-
-    <!-- 1. Costura -->
-    <section class="roll-item" data-title="Costura" data-text="Me apasiona crear con telas e hilos. He hecho vestidos para mí y para una niña. Es una forma de transformar ideas en algo real.">
-      <div class="roll-media">Foto o video de costura</div>
-      <div class="roll-content">
-        <h2>Costura</h2>
-        <p>Me apasiona crear con telas e hilos. He hecho vestidos para mí y para una niña.</p>
-      </div>
-    </section>
-
-    <!-- 2. Leer novelas -->
-    <section class="roll-item" data-title="Leer novelas" data-text="Me encanta perderse en historias. Leer me permite viajar a otros mundos y entender mejor las emociones.">
-      <div class="roll-media">Foto o video leyendo</div>
-      <div class="roll-content">
-        <h2>Leer novelas</h2>
-        <p>Me encanta perderse en historias. Leer me permite viajar a otros mundos.</p>
-      </div>
-    </section>
-
-    <!-- 3. Sudokus -->
-    <section class="roll-item" data-title="Sudokus" data-text="Me gusta el reto de ordenar el caos. Resolver sudokus me relaja y mantiene mi mente activa.">
-      <div class="roll-media">Foto o video de sudoku</div>
-      <div class="roll-content">
-        <h2>Sudokus</h2>
-        <p>Me gusta el reto de ordenar el caos. Resolver sudokus me relaja.</p>
-      </div>
-    </section>
-
-    <!-- 4. Crear con las manos -->
-    <section class="roll-item" data-title="Crear con las manos" data-text="Siempre estoy haciendo algo nuevo: láminas, maquetas, piñatas, afiches… Crear con las manos es mi forma natural de expresarme.">
-      <div class="roll-media">Foto o video creando</div>
-      <div class="roll-content">
-        <h2>Crear con las manos</h2>
-        <p>Siempre estoy haciendo algo nuevo. Crear con las manos es mi forma natural de expresarme.</p>
-      </div>
-    </section>
-
-    <!-- 5. Aprender -->
-    <section class="roll-item" data-title="Aprender cosas nuevas" data-text="Me emociona empezar proyectos en los que no sé todo. Ahora estoy entrando en el mundo de las páginas web y el diseño digital.">
-      <div class="roll-media">Foto o video aprendiendo</div>
-      <div class="roll-content">
-        <h2>Aprender cosas nuevas</h2>
-        <p>Me emociona empezar proyectos en los que no sé todo.</p>
-      </div>
-    </section>
-
-    <!-- 6. Momentos tranquilos -->
-    <section class="roll-item" data-title="Los momentos tranquilos" data-text="Valoro los espacios de calma: una buena lectura, crear en silencio o simplemente estar presente con lo que estoy haciendo.">
-      <div class="roll-media">Foto o video de calma</div>
-      <div class="roll-content">
-        <h2>Los momentos tranquilos</h2>
-        <p>Valoro los espacios de calma y estar presente con lo que estoy haciendo.</p>
-      </div>
-    </section>
-
-  </div>
-
-  <!-- Modal que se abre en horizontal -->
-  <div class="modal" id="modal">
-    <button class="modal-close" id="modal-close">×</button>
-    <div class="modal-inner">
-      <div class="modal-media" id="modal-media">
-        Aquí se verá la foto o el video en grande
-      </div>
-      <div class="modal-text">
-        <h3 id="modal-title">Título</h3>
-        <p id="modal-text">Texto completo</p>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    // Menú móvil
-    document.querySelector('.menu-toggle').addEventListener('click', () => {
-      document.querySelector('.nav-links').classList.toggle('open');
-    });
