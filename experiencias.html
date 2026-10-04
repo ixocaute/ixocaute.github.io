@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Experiencias | Ixomar Cautela</title>
+  <style>
+    :root {
+      --night-deep: #0a1428;
+      --star-yellow: #f4d35e;
+      --text-main: #f0e6d3;
+      --text-soft: #b8a99a;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background-color: var(--night-deep);
+      color: var(--text-main);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* Navegación */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 1.3rem 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(to bottom, rgba(10, 20, 40, 0.9), transparent);
+    }
+
+    .logo {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 1.35rem;
+      color: var(--star-yellow);
+      text-decoration: none;
+      letter-spacing: 0.06em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-soft);
+      text-decoration: none;
+      font-size: 0.88rem;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      position: relative;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--star-yellow);
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--star-yellow);
+    }
+
+    .nav-links a:hover::after,
+    .nav-links a.active::after {
+      width: 100%;
+    }
+
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--star-yellow);
+      font-size: 1.6rem;
+      cursor: pointer;
+    }
+
+    /* Encabezado */
+    .page-header {
+      padding: 9rem 2rem 4rem;
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .page-header .label {
+      font-size: 0.8rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--star-yellow);
+      margin-bottom: 1rem;
+    }
+
+    .page-header h1 {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: clamp(2.5rem, 5vw, 3.5rem);
+      font-weight: 400;
+      margin-bottom: 1rem;
+    }
+
+    .page-header p {
+      color: var(--text-soft);
+      font-size: 1.15rem;
+    }
+
+    /* ========== CAMINO DE LUZ ========== */
+    .timeline {
+      position: relative;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2rem 2rem 8rem;
+    }
+
+    /* La línea dorada (el camino) */
+    .timeline::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 2px;
+      height: 100%;
+      background: linear-gradient(
+        to bottom,
+        transparent,
+        var(--star-yellow) 10%,
+        var(--star-yellow) 90%,
+        transparent
+      );
+      opacity: 0.6;
+    }
+
+    .timeline-item {
+      position: relative;
+      width: 50%;
+      padding: 0 3rem 4.5rem;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .timeline-item.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Izquierda y derecha alternados */
+    .timeline-item:nth-child(odd) {
+      left: 0;
+      text-align: right;
+    }
+
+    .timeline-item:nth-child(even) {
+      left: 50%;
+      text-align: left;
+    }
+
+    /* Punto luminoso */
+    .timeline-dot {
+      position: absolute;
+      top: 0;
+      width: 16px;
+      height: 16px;
+      background: var(--star-yellow);
+      border-radius: 50%;
+      box-shadow: 0 0 0 6px rgba(244, 211, 94, 0.2),
+                  0 0 20px rgba(244, 211, 94, 0.5);
+      z-index: 2;
+    }
+
+    .timeline-item:nth-child(odd) .timeline-dot {
+      right: -8px;
+    }
+
+    .timeline-item:nth-child(even) .timeline-dot {
+      left: -8px;
+    }
+
+    /* Contenido de cada experiencia */
+    .timeline-content {
+      background: rgba(26, 42, 74, 0.4);
+      border: 1px solid rgba(244, 211, 94, 0.15);
+      border-radius: 16px;
+      padding: 1.8rem 1.6rem;
+      backdrop-filter: blur(8px);
+      transition: all 0.3s ease;
+    }
+
+    .timeline-content:hover {
+      border-color: rgba(244, 211, 94, 0.35);
+      transform: translateY(-4px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+    }
+
+    .timeline-date {
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--star-yellow);
+      margin-bottom: 0.6rem;
+    }
+
+    .timeline-content h3 {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 1.35rem;
+      font-weight: 400;
+      margin-bottom: 0.7rem;
+      color: var(--text-main);
+    }
+
+    .timeline-content p {
+      color: var(--text-soft);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.85rem;
+      color: var(--text-soft);
+      border-top: 1px solid rgba(244, 211, 94, 0.1);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .nav {
+        padding: 1.1rem 1.5rem;
+      }
+
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: rgba(10, 20, 40, 0.97);
+        flex-direction: column;
+        padding: 1.5rem;
+        gap: 1.3rem;
+      }
+
+      .nav-links.open {
+        display: flex;
+      }
+
+      .menu-toggle {
+        display: block;
+      }
+
+      .page-header {
+        padding: 8rem 1.5rem 3rem;
+      }
+
+      .timeline {
+        padding: 1rem 1.5rem 5rem;
+      }
+
+      .timeline::before {
+        left: 20px;
+      }
+
+      .timeline-item {
+        width: 100%;
+        left: 0 !important;
+        text-align: left !important;
+        padding-left: 50px;
+        padding-right: 0;
+      }
+
+      .timeline-dot {
+        left: 12px !important;
+        right: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navegación -->
+  <nav class="nav">
+    <a href="index.html" class="logo">✦ Ixomar Cautela</a>
+    <button class="menu-toggle" aria-label="Abrir menú">☰</button>
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">Inicio</a></li>
+      <li><a href="gustos.html" class="active">Gustos</a></li>
+      <li><a href="experiencias.html" class="active">Experiencias</a></li>
+      <li><a href="#">Trabajos</a></li>
+      <li><a href="#">Contacto</a></li>
+    </ul>
+  </nav>
+
+  <!-- Encabezado -->
+  <header class="page-header">
+    <p class="label">Mi recorrido</p>
+    <h1>Experiencias</h1>
+    <p>Los pasos que he dado y que me han traído hasta aquí.</p>
+  </header>
+
+  <!-- Camino de luz -->
+  <div class="timeline">
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-content">
+        <div class="timeline-date">Inicio</div>
+        <h3>Primeros pasos creativos</h3>
+        <p>Empecé creando con las manos: láminas escolares, maquetas, afiches y juegos didácticos. Ahí descubrí que transformar ideas en algo tangible me hacía sentir viva.</p>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-content">
+        <div class="timeline-date">Crecimiento</div>
+        <h3>Manualidades y eventos</h3>
+        <p>Pasé a crear piezas más grandes: láminas decorativas para eventos y piñatas. Cada proyecto me enseñó a resolver problemas y a cuidar los detalles.</p>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-content">
+        <div class="timeline-date">Nuevas habilidades</div>
+        <h3>Costura y creación textil</h3>
+        <p>Me adentré en la costura. Hice vestidos para mí y para una niña. Aprendí que la paciencia y la precisión también son parte de la creatividad.</p>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-content">
+        <div class="timeline-date">2023 — Actualidad</div>
+        <h3>Asistente virtual y gestión</h3>
+        <p>Desde hace 3 años trabajo como asistente virtual: manejo agendas, clientes, pagos, redes y diseño de flyers. También creé una página web y estoy aprendiendo rebranding.</p>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-content">
+        <div class="timeline-date">Hoy</div>
+        <h3>Diseño web y nuevos caminos</h3>
+        <p>Actualmente estudio Contaduría y al mismo tiempo estoy aprendiendo a crear páginas web para personas y pequeños negocios. Quiero unir mi lado creativo con lo digital.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <p>© 2026 Ixomar Cautela</p>
+  </footer>
+
+  <script>
+    // Menú móvil
+    document.querySelector('.menu-toggle').addEventListener('click', () => {
+      document.querySelector('.nav-links').classList.toggle('open');
+    });
+
+    // Animación al hacer scroll (camino de luz)
+    const items = document.querySelectorAll('.timeline-item');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, {
+      threshold: 0.2
+    });
+
+    items.forEach(item => observer.observe(item));
+  </script>
+</body>
+</html>
